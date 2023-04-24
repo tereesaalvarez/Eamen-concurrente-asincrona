@@ -44,14 +44,13 @@ class Jugador(threading.Thread):
             
     def apostar(self):
         tipo_apuesta = random.choice(["numero", "par_impar", "martingala"])
+        self.apuesta = 10
         if tipo_apuesta == "numero":
             numero_elegido = random.randint(1, 36)
-            self.apuesta = 10
             self.numero_apostado = numero_elegido
             print("El jugador", self.ident, "apuesta", self.apuesta, "euros al número", self.numero_apostado)
         elif tipo_apuesta == "par_impar":
             par_impar_elegido = random.choice(["par", "impar"])
-            self.apuesta = 10
             self.par_impar_apostado = par_impar_elegido
             print("El jugador", self.ident, "apuesta", self.apuesta, "euros a", self.par_impar_apostado)
         else:
