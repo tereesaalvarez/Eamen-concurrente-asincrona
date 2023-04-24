@@ -21,18 +21,18 @@ class TestCuentaBancaria(unittest.TestCase):
     def test_ingreso_y_retiro(self):
         with concurrent.futures.ProcessPoolExecutor() as executor:
             #ingresos
-            ingresos= [executor.sumbit(self.cuenta.ingresar_dinero, 100) for i in range(40)]
-            ingresos += [executor.sumbit(self.cuenta.ingresar_dinero, 50) for i in range(20)]
-            ingresos += [executor.sumbit(self.cuenta.ingresar_dinero, 20) for i in range(60)]
+            ingresos= [executor.submit(self.cuenta.ingresar_dinero, 100) for i in range(40)]
+            ingresos += [executor.submit(self.cuenta.ingresar_dinero, 50) for i in range(20)]
+            ingresos += [executor.submit(self.cuenta.ingresar_dinero, 20) for i in range(60)]
             #retiros
-            retiros= [executor.sumbit(self.cuenta.retirar_dinero, 100) for i in range(40)]
-            retiros += [executor.sumbit(self.cuenta.retirar_dinero, 50) for i in range(20)]
-            retiros += [executor.sumbit(self.cuenta.retirar_dinero, 20) for i in range(60)]
+            retiros= [executor.submit(self.cuenta.retirar_dinero, 100) for i in range(40)]
+            retiros += [executor.submit(self.cuenta.retirar_dinero, 50) for i in range(20)]
+            retiros += [executor.submit(self.cuenta.retirar_dinero, 20) for i in range(60)]
 
             ingresos_resultados = [ingreso.result() for ingreso in ingresos]
             retiros_resultados = [retiro.result() for retiro in retiros]
 
-            #saldo_final = sum(ingresos_resultados) - sum(retiros_resultados)
+            saldo_final = sum(ingresos_resultados) - sum(retiros_resultados)
         self.assertEqual(self.cuenta.saldo, saldo_final)
 
 
@@ -67,3 +67,4 @@ class TestCuentaBancaria(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
