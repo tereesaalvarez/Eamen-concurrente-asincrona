@@ -25,6 +25,11 @@ class TestCuentaBancaria(unittest.TestCase):
             ingresos += [executor.sumbit(self.cuenta.ingresar_dinero, 50) for i in range(20)]
             ingresos += [executor.sumbit(self.cuenta.ingresar_dinero, 20) for i in range(60)]
             #retiros
+            retiros= [executor.sumbit(self.cuenta.retirar_dinero, 100) for i in range(40)]
+            retiros += [executor.sumbit(self.cuenta.retirar_dinero, 50) for i in range(20)]
+            retiros += [executor.sumbit(self.cuenta.retirar_dinero, 20) for i in range(60)]
+            
+
 
 
     #def test_ingreso_y_retiro(self):
