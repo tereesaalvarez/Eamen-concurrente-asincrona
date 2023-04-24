@@ -37,3 +37,10 @@ class TestCuentaBancaria(unittest.TestCase):
         for i in range(60):
             t = threading.Thread(target=self.cuenta.retirar_dinero, args=(20,))
             threads.append(t)
+
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+        
+        self.assertEqual(self.cuenta.saldo, 100)
