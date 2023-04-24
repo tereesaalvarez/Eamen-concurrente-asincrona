@@ -1,5 +1,7 @@
 import threading
 import unittest
+from multiprocessing import Pool
+import multiprocessing
 
 class CuentaBancaria:
     def __init__(self):
@@ -44,3 +46,16 @@ class TestCuentaBancaria(unittest.TestCase):
             t.join()
         
         self.assertEqual(self.cuenta.saldo, 100)
+
+if __name__ == '__main__':
+    unittest.main()
+    cuenta = multiprocessing.Value('i', 100)
+    
+    tareas_ingreso = [(cuenta, 100)] * 40 + [(cuenta, 50)] * 20 + [(cuenta, 20)] * 60
+    tareas_retiro = [(cuenta, 100)] * 40 + [(cuenta, 50)] * 20 + [(cuenta, 20)] * 60
+    
+    with multiprocessing.Pool(processes=4) as pool:
+        pool.starmap(CuentaBancaria.ingresar_dinero, tareas_ingreso)
+        pool.starmap(CuentaBancaria.retirar_dinero, tareas_retiro)
+        
+    assert cuenta.value == 100, f"La cuenta bancaria no tiene el saldo esperado ({cuenta.value} euros)."
