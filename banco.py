@@ -10,9 +10,11 @@ class CuentaBancaria:
     
     def ingresar_dinero(self,cantidad):
         self.saldo += cantidad
+        return cantidad
 
     def retirar_dinero(self,cantidad):
         self.saldo -= cantidad
+        return cantidad
 
 class TestCuentaBancaria(unittest.TestCase):
     def setUp(self):
@@ -32,7 +34,7 @@ class TestCuentaBancaria(unittest.TestCase):
             ingresos_resultados = [ingreso.result() for ingreso in ingresos]
             retiros_resultados = [retiro.result() for retiro in retiros]
 
-            saldo_final = sum(ingresos_resultados) - sum(retiros_resultados)
+            saldo_final = self.cuenta.saldo + sum(ingresos_resultados) - sum(retiros_resultados)
         self.assertEqual(self.cuenta.saldo, saldo_final)
 
 
