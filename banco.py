@@ -2,6 +2,7 @@ import threading
 import unittest
 from multiprocessing import Pool
 import multiprocessing
+import concurrent.futures
 
 class CuentaBancaria:
     def __init__(self):
@@ -16,6 +17,15 @@ class CuentaBancaria:
 class TestCuentaBancaria(unittest.TestCase):
     def setUp(self):
         self.cuenta = CuentaBancaria()
+
+    def test_ingreso_y_retiro(self):
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            #ingresos
+            ingresos= [executor.sumbit(self.cuenta.ingresar_dinero, 100) for i in range(40)]
+            ingresos += [executor.sumbit(self.cuenta.ingresar_dinero, 50) for i in range(20)]
+            ingresos += [executor.sumbit(self.cuenta.ingresar_dinero, 20) for i in range(60)]
+            #retiros
+
 
     #def test_ingreso_y_retiro(self):
         #threads= []
