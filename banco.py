@@ -27,3 +27,13 @@ class TestCuentaBancaria(unittest.TestCase):
         for i in range(60):
             t = threading.Thread(target=self.cuenta.ingresar_dinero, args=(20,))
             threads.append(t)
+#retiro
+        for i in range(40):
+            t = threading.Thread(target=self.cuenta.retirar_dinero, args=(100,))
+            threads.append(t)
+        for i in range(20):
+            t = threading.Thread(target=self.cuenta.retirar_dinero, args=(50,))
+            threads.append(t)
+        for i in range(60):
+            t = threading.Thread(target=self.cuenta.retirar_dinero, args=(20,))
+            threads.append(t)
